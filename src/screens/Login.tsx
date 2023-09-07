@@ -40,6 +40,10 @@ const Login = ({ navigation }: any) => {
     const [senha, setSenha] = useState<string>();
     const [hasError, setHasError] = useState(false);
 
+    const navegar = () => {
+        navigation.navigate('Home', { id: 1 });
+    }
+
     // Setando o Login
     const onChangeInput = (value: string) => {
         if (value.length <= 0) {
@@ -70,9 +74,7 @@ const Login = ({ navigation }: any) => {
             <TextInput secureTextEntry={true} placeholder="Digite sua Senha" style={style.textInput} value={senha} onChangeText={onChangeInputSenha} />
 
             <TouchableOpacity style={style.btnLogar}>
-                <Button onPress={() => {
-                    navigation.navigate('Home')
-                }} title="Logar" />
+                <Button onPress={navegar} title="Logar" />
             </TouchableOpacity>
 
         </SafeAreaView>
