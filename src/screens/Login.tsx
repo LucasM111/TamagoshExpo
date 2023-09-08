@@ -1,7 +1,5 @@
 import { useState } from "react";
-import { SafeAreaView, StyleSheet, TextInput, Button, TouchableOpacity } from "react-native";
-import Home from "./Home";
-import App from "../../App";
+import { SafeAreaView, StyleSheet, TextInput, Button, TouchableOpacity, Image, View } from "react-native";
 
 const style = StyleSheet.create({
     container: {
@@ -27,8 +25,19 @@ const style = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         color: "#fff"
-
-
+    },
+    btnCad: {
+        margin: 10,
+        width: 100,
+        height: 40,
+        backgroundColor: '#b7ff00',
+        borderRadius: 10,
+        alignItems: 'center',
+        justifyContent: 'center',
+        color: "#fff"
+    },
+    logo: {
+        height: 200
     }
 })
 
@@ -41,7 +50,11 @@ const Login = ({ navigation }: any) => {
     const [hasError, setHasError] = useState(false);
 
     const navegar = () => {
-        navigation.navigate('Home', { id: 1 });
+        navigation.navigate('Home');
+    }
+
+    const cadastrar = () => {
+        navigation.navigate('Cadastro');
     }
 
     // Setando o Login
@@ -67,6 +80,9 @@ const Login = ({ navigation }: any) => {
 
     return (
         <SafeAreaView style={style.container}>
+            <View>
+                <Image source={require('../assets/logo.png')} style={style.logo} />
+            </View>
 
             <TextInput placeholder="Digite seu Login" style={style.textInput} value={login} onChangeText={onChangeInput} />
             {hasError ?? null}
@@ -75,6 +91,14 @@ const Login = ({ navigation }: any) => {
 
             <TouchableOpacity style={style.btnLogar}>
                 <Button onPress={navegar} title="Logar" />
+            </TouchableOpacity>
+
+
+            {/* 
+            Lembrete para mim:
+                Ta dando erro nesse botão de ir pra tela de Cadastro, preciso descobrir o que é.. "Voce tem uma tela de Cadastro?" esse é o erro */}
+            <TouchableOpacity style={style.btnCad}>
+                <Button onPress={cadastrar} title="Cadastrar" />
             </TouchableOpacity>
 
         </SafeAreaView>

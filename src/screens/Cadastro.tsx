@@ -8,20 +8,15 @@ const style = StyleSheet.create({
         alignItems: 'center',
         padding: 20
     },
-    bemvindo: {
-        width: 300,
-        height: 200
-    }
 })
 
-const Home = () => {
+
+const Cadastro = () => {
     return (
         <SafeAreaView style={style.container}>
-            <View >
-                <Image source={require('../assets/bemvindo.png')} style={style.bemvindo} />
-            </View>
+            <Text> Ola </Text>
         </SafeAreaView>
     );
 }
 
-export default Home;
+export default Cadastro;
