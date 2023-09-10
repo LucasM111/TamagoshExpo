@@ -94,9 +94,6 @@ const Login = ({ navigation }: any) => {
             </TouchableOpacity>
 
 
-            {/* 
-            Lembrete para mim:
-                Ta dando erro nesse botão de ir pra tela de Cadastro, preciso descobrir o que é.. "Voce tem uma tela de Cadastro?" esse é o erro */}
             <TouchableOpacity style={style.btnCad}>
                 <Button onPress={cadastrar} title="Cadastrar" />
             </TouchableOpacity>
