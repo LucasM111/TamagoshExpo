@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { SafeAreaView, StyleSheet, TextInput, Button, TouchableOpacity, Image, View } from "react-native";
+import { SafeAreaView, StyleSheet, TextInput, Button, TouchableOpacity, Image, View, Alert } from "react-native";
 
 const style = StyleSheet.create({
     container: {
@@ -47,9 +47,12 @@ const Login = ({ navigation }: any) => {
 
     const [login, setLogin] = useState<string>();
     const [senha, setSenha] = useState<string>();
-    const [hasError, setHasError] = useState(false);
+    const [hasError, setHasError] = useState(true);
 
     const navegar = () => {
+        if (hasError) {
+            return Alert.alert("Atenção", "Valores invalidos em senha/login")
+        }
         navigation.navigate('Home');
     }
 
@@ -57,26 +60,30 @@ const Login = ({ navigation }: any) => {
         navigation.navigate('Cadastro');
     }
 
+
     // Setando o Login
     const onChangeInput = (value: string) => {
-        if (value.length <= 0) {
+        // console.log(value, "=======")
+        if (value.length < 1 || value.length > 8) {
             setHasError(true)
-        } else {
-            setHasError(false)
+            return Alert.alert("Atenção", "Valores invalidos em senha/login")
         }
+        setHasError(false)
         setLogin(value)
 
     };
 
     // Setando a senha
     const onChangeInputSenha = (value: string) => {
-        if (value.length <= 0) {
+        if (value.length < 6 || value.length > 8) {
             setHasError(true)
-        } else {
-            setHasError(false)
+            return Alert.alert("Atenção", "Valores invalidos em senha/login")
         }
+        setHasError(false)
         setSenha(value)
     };
+
+
 
     return (
         <SafeAreaView style={style.container}>
@@ -84,18 +91,39 @@ const Login = ({ navigation }: any) => {
                 <Image source={require('../assets/logo.png')} style={style.logo} />
             </View>
 
-            <TextInput placeholder="Digite seu Login" style={style.textInput} value={login} onChangeText={onChangeInput} />
-            {hasError ?? null}
+            <TextInput
+                placeholder="Digite seu Login"
+                style={style.textInput}
+                value={login}
+                onChangeText={onChangeInput}
+            />
 
-            <TextInput secureTextEntry={true} placeholder="Digite sua Senha" style={style.textInput} value={senha} onChangeText={onChangeInputSenha} />
 
-            <TouchableOpacity style={style.btnLogar}>
-                <Button onPress={navegar} title="Logar" />
+            <TextInput
+                secureTextEntry={true}
+                placeholder="Digite sua Senha"
+                style={style.textInput}
+                value={senha}
+                onChangeText={onChangeInputSenha}
+            />
+
+            <TouchableOpacity
+                style={style.btnLogar}
+            >
+                <Button
+                    onPress={navegar}
+                    title="Logar"
+                />
             </TouchableOpacity>
 
 
-            <TouchableOpacity style={style.btnCad}>
-                <Button onPress={cadastrar} title="Cadastrar" />
+            <TouchableOpacity
+                style={style.btnCad}
+            >
+                <Button
+                    onPress={cadastrar}
+                    title="Cadastrar"
+                />
             </TouchableOpacity>
 
         </SafeAreaView>
