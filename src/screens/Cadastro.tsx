@@ -15,8 +15,10 @@ const style = StyleSheet.create({
         width: 400,
         height: 100,
         justifyContent: 'center',
+        margin: 50
     },
     textInput: {
+        margin: 5,
         width: 300,
         height: 40,
         backgroundColor: "#fff",
@@ -36,62 +38,35 @@ const style = StyleSheet.create({
     }
 })
 
-
-const Cadastro = () => {
-    const [cadastro, setCadastro] = useState<string>();
+const Cadastro = ({ navigation }: any) => {
     const [email, setEmail] = useState<string>();
     const [senha, setSenha] = useState<string>();
-    const [loading, setLoading] = useState(true);
-    const [hasError, setHasError] = useState(true);
+    const voltar = () => { navigation.navigate('Login') };
 
-    const postCadastro = useCallback(async () => {
+    const submitar = async () => {
         try {
-            setLoading(true);
-
-            const { data } = await axios.get("https://tamagochiapi-clpsampedro.b4a.run");
-
-            setEmail(
-                data.map((email: any) => ({
-                    email: email.email,
-                }))
-            )
-
-            setSenha(
-                data.map((senha: any) => ({
-                    senha: senha.password
-                }))
-            )
-
+            const enter = {
+                email: email,
+                password: senha,
+            };
+            const req = await axios.post('https://tamagochiapi-clpsampedro.b4a.run/register/', enter);
+            navigation.navigate('Login');
         } catch (error) {
-            console.log(error);
-        } finally {
-            setLoading(false)
+            console.error(error)
         }
-    }, []);
+    }
 
-    useEffect(() => {
-        postCadastro();
-    }, [])
-
-
-    //setar o email
-    const inputEmail = (value: string) => {
-        if (value.length < 0) {
-            setHasError(true)
-            return Alert.alert("Atenção", "Insira um e-mail valido")
-        }
-        setHasError(false);
+    const Input = (value: string) => {
         setEmail(value);
-    }
-
-    //setar a senha
-    const inputSenha = (value: string) => {
+    };
+    const InputSenha = (value: string) => {
         setSenha(value);
-    }
+
+    };
 
     return (
         <SafeAreaView style={style.container}>
-            <View >
+            <View>
                 <Image source={require('../assets/neon.jpg')} style={style.img} />
             </View>
 
@@ -99,7 +74,7 @@ const Cadastro = () => {
                 placeholder="Digite seu Login"
                 style={style.textInput}
                 value={email}
-                onChangeText={inputEmail}
+                onChangeText={Input}
             />
 
 
@@ -108,16 +83,25 @@ const Cadastro = () => {
                 placeholder="Digite sua Senha"
                 style={style.textInput}
                 value={senha}
-                onChangeText={inputSenha}
+                onChangeText={InputSenha}
             />
 
             <TouchableOpacity
                 style={style.btnCad}
             >
-
-
-
+                <Button
+                    onPress={submitar}
+                    title="Cadastrar"
+                />
             </TouchableOpacity>
+
+            <TouchableOpacity style={style.btnCad}>
+                <Button
+                    onPress={voltar}
+                    title="Voltar"
+                />
+            </TouchableOpacity>
+
         </SafeAreaView>
     );
 }

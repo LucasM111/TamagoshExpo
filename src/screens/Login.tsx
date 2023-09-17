@@ -1,13 +1,13 @@
+import axios from "axios";
 import { useState } from "react";
 import { SafeAreaView, StyleSheet, TextInput, Button, TouchableOpacity, Image, View, Alert } from "react-native";
 
 const style = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: "#252126",
+        backgroundColor: "#000",
         alignItems: 'center',
-        justifyContent: 'center',
-        padding: 20
+        padding: 20,
     },
     textInput: {
         width: 300,
@@ -45,45 +45,29 @@ const style = StyleSheet.create({
 
 const Login = ({ navigation }: any) => {
 
-    const [login, setLogin] = useState<string>();
+    const [email, setEmail] = useState<string>();
     const [senha, setSenha] = useState<string>();
-    const [hasError, setHasError] = useState(true);
+    const navegar = () => { navigation.navigate('Cadastro') };
 
-    const navegar = () => {
-        if (hasError) {
-            return Alert.alert("Atenção", "Valores invalidos em senha/login")
+    const submitar = async () => {
+        try {
+            const enter = {
+                email: email,
+                password: senha,
+            };
+            const req = await axios.post('https://tamagochiapi-clpsampedro.b4a.run/login/', enter);
+            navigation.navigate('Home', { email: { email } } && { senha: { senha } });
+        } catch (error) {
+            console.error(error)
         }
-        navigation.navigate('Home');
     }
 
-    const cadastrar = () => {
-        navigation.navigate('Cadastro');
-    }
-
-
-    // Setando o Login
-    const onChangeInput = (value: string) => {
-        // console.log(value, "=======")
-        if (value.length < 1 || value.length > 8) {
-            setHasError(true)
-            return Alert.alert("Atenção", "Valores invalidos em senha/login")
-        }
-        setHasError(false)
-        setLogin(value)
-
+    const Input = (value: string) => {
+        setEmail(value);
     };
-
-    // Setando a senha
-    const onChangeInputSenha = (value: string) => {
-        if (value.length < 6 || value.length > 8) {
-            setHasError(true)
-            return Alert.alert("Atenção", "Valores invalidos em senha/login")
-        }
-        setHasError(false)
-        setSenha(value)
+    const InputSenha = (value: string) => {
+        setSenha(value);
     };
-
-
 
     return (
         <SafeAreaView style={style.container}>
@@ -94,8 +78,8 @@ const Login = ({ navigation }: any) => {
             <TextInput
                 placeholder="Digite seu Login"
                 style={style.textInput}
-                value={login}
-                onChangeText={onChangeInput}
+                value={email}
+                onChangeText={Input}
             />
 
 
@@ -104,14 +88,14 @@ const Login = ({ navigation }: any) => {
                 placeholder="Digite sua Senha"
                 style={style.textInput}
                 value={senha}
-                onChangeText={onChangeInputSenha}
+                onChangeText={InputSenha}
             />
 
             <TouchableOpacity
                 style={style.btnLogar}
             >
                 <Button
-                    onPress={navegar}
+                    onPress={submitar}
                     title="Logar"
                 />
             </TouchableOpacity>
@@ -121,7 +105,7 @@ const Login = ({ navigation }: any) => {
                 style={style.btnCad}
             >
                 <Button
-                    onPress={cadastrar}
+                    onPress={navegar}
                     title="Cadastrar"
                 />
             </TouchableOpacity>
