@@ -41,10 +41,12 @@ const style = StyleSheet.create({
 const Cadastro = ({ navigation }: any) => {
     const [email, setEmail] = useState<string>();
     const [senha, setSenha] = useState<string>();
+    const [loading, setLoading] = useState(false);
     const voltar = () => { navigation.navigate('Login') };
 
     const submitar = async () => {
         try {
+            setLoading(true)
             const enter = {
                 email: email,
                 password: senha,
@@ -53,6 +55,8 @@ const Cadastro = ({ navigation }: any) => {
             navigation.navigate('Login');
         } catch (error) {
             console.error(error)
+        } finally {
+            setLoading(false)
         }
     }
 
