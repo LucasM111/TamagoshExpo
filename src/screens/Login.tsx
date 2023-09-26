@@ -56,9 +56,11 @@ const Login = ({ navigation }: any) => {
                 password: senha,
             };
             const req = await axios.post('https://tamagochiapi-clpsampedro.b4a.run/login/', enter);
-            navigation.navigate('Home', { email: { email } } && { senha: { senha } });
+            navigation.navigate('Home');
+
         } catch (error) {
             console.error(error)
+            Alert.alert("Erro", "Email/Senha invalida")
         }
     }
 

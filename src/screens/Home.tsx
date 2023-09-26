@@ -35,6 +35,7 @@ const Home = ({ navigation }: any) => {
         <SafeAreaView style={style.container}>
             <View >
                 <Image source={require('../assets/bemvindo.png')} style={style.bemvindo} />
+
             </View>
 
             <TouchableOpacity style={style.btnCad}>

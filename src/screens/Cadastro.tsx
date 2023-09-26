@@ -52,6 +52,8 @@ const Cadastro = ({ navigation }: any) => {
                 password: senha,
             };
             const req = await axios.post('https://tamagochiapi-clpsampedro.b4a.run/register/', enter);
+            Alert.alert("Congratulations", "Cadastro Realizado com Sucesso")
+
             navigation.navigate('Login');
         } catch (error) {
             console.error(error)
