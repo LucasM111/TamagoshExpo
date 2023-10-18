@@ -1,6 +1,7 @@
-import axios from "axios";
+import axios from '../axios.configs';
 import { useState } from "react";
 import { SafeAreaView, StyleSheet, TextInput, Button, TouchableOpacity, Image, View, Alert } from "react-native";
+import user from '../store/user';
 
 const style = StyleSheet.create({
     container: {
@@ -49,18 +50,22 @@ const Login = ({ navigation }: any) => {
     const [senha, setSenha] = useState<string>();
     const navegar = () => { navigation.navigate('Cadastro') };
 
+    const userStore = user();
+
     const submitar = async () => {
         try {
             const enter = {
                 email: email,
                 password: senha,
             };
-            const req = await axios.post('https://tamagochiapi-clpsampedro.b4a.run/login/', enter);
+            const req = await axios.post('/login', enter);
+            userStore.setToken(req.data.token);
+
             navigation.navigate('Home');
 
         } catch (error) {
             console.error(error)
-            Alert.alert("Erro", "Email/Senha invalida")
+            Alert.alert("Erro", "Email ou Senha invalida")
         }
     }
 

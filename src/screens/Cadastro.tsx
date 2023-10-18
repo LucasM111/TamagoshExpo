@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios from '../axios.configs';
 import React, { useCallback, useState, useEffect } from "react";
 import { SafeAreaView, TextInput, View, Image, StyleSheet, Alert, TouchableOpacity, Button } from "react-native";
 
@@ -41,6 +41,7 @@ const style = StyleSheet.create({
 const Cadastro = ({ navigation }: any) => {
     const [email, setEmail] = useState<string>();
     const [senha, setSenha] = useState<string>();
+    const [confirmaSenha, setConfirmaSenha] = useState<string>();
     const [loading, setLoading] = useState(false);
     const voltar = () => { navigation.navigate('Login') };
 
@@ -51,7 +52,7 @@ const Cadastro = ({ navigation }: any) => {
                 email: email,
                 password: senha,
             };
-            const req = await axios.post('https://tamagochiapi-clpsampedro.b4a.run/register/', enter);
+            await axios.post('/register', enter);
             Alert.alert("Congratulations", "Cadastro Realizado com Sucesso")
 
             navigation.navigate('Login');
@@ -69,6 +70,16 @@ const Cadastro = ({ navigation }: any) => {
         setSenha(value);
 
     };
+
+    // const InputConfirmarSenha = (value: string) => {
+    //     setConfirmaSenha(value);
+    //     if (senha !== confirmaSenha) {
+    //         Alert.alert("Ops", "As senha devem ser iguais")
+    //     }
+    // };
+
+
+
 
     return (
         <SafeAreaView style={style.container}>
@@ -91,6 +102,14 @@ const Cadastro = ({ navigation }: any) => {
                 value={senha}
                 onChangeText={InputSenha}
             />
+
+            {/* <TextInput
+                secureTextEntry={true}
+                placeholder="Digite sua Confirmação de Senha"
+                style={style.textInput}
+                value={confirmaSenha}
+                onChangeText={InputConfirmarSenha}
+            /> */}
 
             <TouchableOpacity
                 style={style.btnCad}

@@ -1,6 +1,6 @@
-import axios from "axios";
 import React, { useState } from "react";
 import { Text, SafeAreaView, TextInput, View, Image, StyleSheet, Alert, TouchableOpacity, Button } from "react-native";
+import axios from '../axios.configs';
 
 
 const style = StyleSheet.create({
@@ -48,9 +48,10 @@ const CadPets = ({ navigation }: any) => {
                 name: nome,
 
             };
+            await axios.post('/pet', cadPet);
 
-            const req = await axios.post("https://tamagochiapi-clpsampedro.b4a.run/pet/", cadPet);
             navigation.navigate('Home');
+
             Alert.alert("Congratulations", "Cadastro Realizado com Sucesso")
 
         } catch (error) {
