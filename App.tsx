@@ -7,9 +7,7 @@ import Home from "./src/screens/Home";
 import Cadastro from './src/screens/Cadastro';
 import CadPets from './src/screens/CadPets';
 import ListPet from './src/screens/ListPet';
-
-
-
+import DetalhesPet from './src/screens/DetalhesPet';
 
 const Stack = createNativeStackNavigator();
 
@@ -26,6 +24,7 @@ function App(): JSX.Element {
         <Stack.Screen name='Cadastro' component={Cadastro} />
         <Stack.Screen name='CadPets' component={CadPets} />
         <Stack.Screen name='ListPet' component={ListPet} />
+        <Stack.Screen name='DetalhesPet' component={DetalhesPet} />
 
       </Stack.Navigator>
     </NavigationContainer>

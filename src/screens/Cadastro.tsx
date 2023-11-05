@@ -48,6 +48,13 @@ const Cadastro = ({ navigation }: any) => {
     const submitar = async () => {
         try {
             setLoading(true)
+
+            if (senha !== confirmaSenha) {
+                Alert.alert("Ops", "As senhas devem ser iguais");
+                setLoading(false);
+                return;
+            }
+
             const enter = {
                 email: email,
                 password: senha,
@@ -71,12 +78,9 @@ const Cadastro = ({ navigation }: any) => {
 
     };
 
-    // const InputConfirmarSenha = (value: string) => {
-    //     setConfirmaSenha(value);
-    //     if (senha !== confirmaSenha) {
-    //         Alert.alert("Ops", "As senha devem ser iguais")
-    //     }
-    // };
+    const InputConfirmarSenha = (value: string) => {
+        setConfirmaSenha(value);
+    };
 
 
 
@@ -103,13 +107,13 @@ const Cadastro = ({ navigation }: any) => {
                 onChangeText={InputSenha}
             />
 
-            {/* <TextInput
+            <TextInput
                 secureTextEntry={true}
                 placeholder="Digite sua Confirmação de Senha"
                 style={style.textInput}
                 value={confirmaSenha}
                 onChangeText={InputConfirmarSenha}
-            /> */}
+            />
 
             <TouchableOpacity
                 style={style.btnCad}
