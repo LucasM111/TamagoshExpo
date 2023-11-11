@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { SafeAreaView, Text, View, Image, StyleSheet, TouchableOpacity, Button, ActivityIndicator, Alert } from 'react-native';
 import axios from '../axios.configs';
-import TamaGame from "./TamaGame";
+import JogoParOuImpar from "./JogoParouImpar";
 
 const styles = StyleSheet.create({
     container: {
@@ -82,20 +82,25 @@ const getPetDetails = async (id) => {
 const DetalhesPet = ({ route }: any) => {
     const { id, name } = route.params;
     const [petDetails, setPetDetails] = useState(null);
-    // const [jogoAberto, setJogoAberto] = useState(false);
+    const [jogoAberto, setJogoAberto] = useState(false);
+    const handleGameEnd = () => {
+        setJogoAberto(false);
+        brincarComPet();
 
+
+    };
 
     const alimentarPet = async () => {
         try {
-            const vidaAntes = Math.round(petDetails?.life);
-            const fomeAntes = Math.round(petDetails?.foodLevel);
+            const DescansoAntes = Math.floor(Math.round(petDetails?.life));
+            const fomeAntes = Math.floor(Math.round(petDetails?.foodLevel));
 
             await axios.post(`/pet/${id}/food`);
             console.log('Pet alimentado com sucesso!');
 
             if (petDetails) {
                 const novoNivelVida = petDetails.life + 1;
-                const novoNivelFome = Math.round(petDetails.foodLevel - 5, 0);
+                const novoNivelFome = Math.floor(Math.round(petDetails.foodLevel - 5));
 
                 setPetDetails({
                     ...petDetails,
@@ -103,11 +108,11 @@ const DetalhesPet = ({ route }: any) => {
                     foodLevel: novoNivelFome
                 });
 
-                const vidaDepois = Math.round(novoNivelVida);
-                const fomeDepois = Math.round(novoNivelFome);
+                const vidaDepois = Math.floor(Math.round(novoNivelVida));
+                const fomeDepois = Math.floor(Math.round(novoNivelFome));
 
-                Alert.alert("Pet alimentado com sucesso!",
-                    `Nível de vida: ${vidaAntes} > ${vidaDepois}
+                Alert.alert("Agora o Pet ta de pancinha cheia",
+                    `Nível de vida: ${DescansoAntes} > ${vidaDepois}
                     \nNível de fome: ${fomeAntes} > ${fomeDepois}`);
             }
         } catch (error) {
@@ -120,7 +125,7 @@ const DetalhesPet = ({ route }: any) => {
 
     const aumentarDescansoPet = async () => {
         try {
-            const vidaAntes = Math.round(petDetails?.life);
+            const vidaAntes = Math.floor(Math.round(petDetails?.life));
 
             await axios.post(`/pet/${id}/rest`);
             console.log('Descanso do pet aumentado com sucesso!');
@@ -133,9 +138,9 @@ const DetalhesPet = ({ route }: any) => {
                     life: novaVida
                 });
 
-                const vidaDepois = Math.round(novaVida);
+                const vidaDepois = Math.floor(Math.round(novaVida));
 
-                Alert.alert("PET Dormiu e Descansou com sucesso!",
+                Alert.alert("Pet Dormiu e Descansou",
                     `Nível de vida: ${vidaAntes} > ${vidaDepois}`);
             }
         } catch (error) {
@@ -147,10 +152,27 @@ const DetalhesPet = ({ route }: any) => {
 
     const brincarComPet = async () => {
         try {
+            const DiversaoAntes = Math.floor(Math.round(petDetails?.funLevel));
+
             await axios.post(`/pet/${id}/play`);
-            console.log('Pet brincou com sucesso!');
+            console.log('Descanso do pet aumentado com sucesso!');
+
+            if (petDetails) {
+                const Novadiversao = petDetails.funLevel + 1;
+
+                setPetDetails({
+                    ...petDetails,
+                    funLevel: Novadiversao
+                });
+
+                const DiversaoDepois = Math.floor(Math.round(Novadiversao));
+
+                Alert.alert("O Pet ta Euforico com o Jogo",
+                    `Nível de Diversão: ${DiversaoAntes} > ${DiversaoDepois}`);
+            }
         } catch (error) {
-            console.error('Erro ao brincar com o pet', error);
+            console.error('Erro ao aumentar o descanso do pet', error);
+            Alert.alert('Houve um erro ao tentar aumentar o descanso do pet');
         }
     };
     useEffect(() => {
@@ -166,17 +188,17 @@ const DetalhesPet = ({ route }: any) => {
     return (
         <SafeAreaView style={styles.container}>
             {jogoAberto ? (
-                <TamaGame />
+                <JogoParOuImpar onGameEnd={handleGameEnd} />
             ) : (
                 petDetails ? (
                     <View style={styles.card}>
                         <Text style={styles.petDetails}>ID: {petDetails.id}</Text>
                         <Text style={styles.petDetailsNome}>{petDetails.name}</Text>
-                        <Text style={styles.petDetailsNivel}>Nível: {Math.round(petDetails.restLevel)}</Text>
+                        <Text style={styles.petDetailsNivel}>Level: {Math.round(petDetails.restLevel)}</Text>
                         <Image source={require('../assets/ChibiKurama.png')} style={styles.image} />
                         <Text style={styles.petDetailsStats}>Vida: {Math.round(petDetails.life)}</Text>
-                        <Text style={styles.petDetailsStats}>Nível de Diversão: {Math.round(petDetails.funLevel)}</Text>
-                        <Text style={styles.petDetailsStats}>Nível de Fome: {Math.round(petDetails.foodLevel)}</Text>
+                        <Text style={styles.petDetailsStats}>Diversão: {Math.round(petDetails.funLevel)}</Text>
+                        <Text style={styles.petDetailsStats}>Fome: {Math.round(petDetails.foodLevel)}</Text>
 
                         <TouchableOpacity style={styles.btn}>
                             <Button onPress={alimentarPet} title="Alimentar" />
@@ -188,8 +210,8 @@ const DetalhesPet = ({ route }: any) => {
 
                         <TouchableOpacity style={styles.btn}>
                             <Button onPress={() => {
-                                brincarComPet();
-                                // setJogoAberto(true);
+                                console.log('Jogo aberto!');
+                                setJogoAberto(true);
                             }} title="Brincar" />
                         </TouchableOpacity>
 
