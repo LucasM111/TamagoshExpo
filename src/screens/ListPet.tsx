@@ -4,6 +4,7 @@ import axios from '../axios.configs';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import user from "../store/user";
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import imagem1 from '../assets/1.png';
 import imagem2 from '../assets/2.png';
 import imagem3 from '../assets/3.png';
@@ -19,23 +20,20 @@ import imagem9 from '../assets/9.png';
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: "#252126",
+        backgroundColor: "#f5f5f5",
         alignItems: 'center',
         padding: 20
     },
     card: {
         borderWidth: 2,
-        borderRadius: 20,
-        margin: 5,
-        padding: 10,
-        width: 380,
-        height: 200,
+        borderRadius: 10,
+        margin: 10,
+        padding: 15,
         backgroundColor: '#fff',
         alignItems: 'center',
-        borderColor: '#0c7a02',
+        borderColor: '#4caf50',
         flexDirection: 'row',
         justifyContent: 'space-between',
-        Border: 50,
     },
     Text: {
         fontSize: 13,
@@ -61,6 +59,7 @@ const styles = StyleSheet.create({
         borderRadius: 50,
         alignItems: 'center',
         justifyContent: 'center',
+        margin: 10,
     },
     confirmarDelete: {
         position: 'absolute',
@@ -70,7 +69,6 @@ const styles = StyleSheet.create({
         bottom: 0,
         backgroundColor: 'rgba(0, 0, 0, 0.9)',
         alignItems: 'center',
-        justifyContent: 'center',
     },
     confirmarEditar: {
         position: 'absolute',
@@ -80,7 +78,6 @@ const styles = StyleSheet.create({
         bottom: 0,
         backgroundColor: 'rgba(0, 0, 0, 0.9)',
         alignItems: 'center',
-        justifyContent: 'center',
     },
     TextEdit: {
         margin: 5,
@@ -124,7 +121,7 @@ const styles = StyleSheet.create({
         backgroundColor: 'red',
     },
     Cancelar: {
-        backgroundColor: 'blue',
+        backgroundColor: 'green',
     },
     ConfirmarEdit: {
         backgroundColor: 'green',
@@ -132,13 +129,17 @@ const styles = StyleSheet.create({
     CancelarEdit: {
         backgroundColor: 'red',
     },
-    buttonText: {
-        color: 'white',
+    buttonTextDelete: {
+        padding: 5,
+        fontSize: 16,
+        fontWeight: 'bold',
+        color: '#fff',
     },
     imagem: {
         width: 110,
         height: 100,
         marginTop: 20,
+        borderRadius: 50,
     },
     btnCadastrarPET: {
         margin: 10,
@@ -149,6 +150,43 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         color: '#fff',
+    },
+    logo: {
+        width: 700,
+        height: 300,
+    },
+    buttonContainer: {
+        marginVertical: 10,
+        width: 200,
+        height: 40,
+        borderRadius: 10,
+        alignItems: 'center',
+        justifyContent: 'center',
+        flexDirection: 'row',
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 2,
+        },
+        shadowOpacity: 0.2,
+        shadowRadius: 3.84,
+        elevation: 5,
+    },
+
+    buttonText: {
+        fontSize: 16,
+        fontWeight: 'bold',
+        color: '#fff',
+
+    },
+    btnList: {
+        backgroundColor: '#4CAF50',
+    },
+    btnSair: {
+        backgroundColor: '#e74c3c',
+    },
+    btnLogout: {
+        backgroundColor: '#e74c3c',
     },
 });
 
@@ -223,6 +261,11 @@ const ListItem = ({ pets, onDelete }: ListItemProps) => {
     return (
         <TouchableOpacity onPress={handleCardClick}>
             <View style={styles.card}>
+                <KeyboardAwareScrollView
+                    contentContainerStyle={{ flex: 1 }}
+                    resetScrollToCoords={{ x: 0, y: 0 }}
+                    scrollEnabled={false}
+                ></KeyboardAwareScrollView>
                 <View>
                     <Text style={styles.Text}>ID: {pets.id}</Text>
                     <Text style={styles.TextDetalhes}>Nome: {pets.name}</Text>
@@ -237,19 +280,22 @@ const ListItem = ({ pets, onDelete }: ListItemProps) => {
 
                 <Modal transparent={true} animationType="slide" visible={Confirmarcao}>
                     <View style={styles.confirmarDelete}>
+                        <View>
+                            <Image source={require('../assets/DeletePet.png')} style={styles.logo} />
+                        </View>
                         <Text style={styles.TextConfirmDelete}>Deletar o pet {pets.name}?</Text>
                         <View style={styles.ContainerButton}>
                             <TouchableOpacity
                                 style={[styles.btnCad, styles.Confirmar]}
                                 onPress={() => Delete(pets.id)}
                             >
-                                <Text style={styles.buttonText}>Sim</Text>
+                                <Text style={styles.buttonTextDelete}>Sim</Text>
                             </TouchableOpacity>
                             <TouchableOpacity
                                 style={[styles.btnCad, styles.Cancelar]}
                                 onPress={() => setConfirmarcao(false)}
                             >
-                                <Text style={styles.buttonText}>Não</Text>
+                                <Text style={styles.buttonTextDelete}>Não</Text>
                             </TouchableOpacity>
                         </View>
                     </View>
@@ -257,6 +303,9 @@ const ListItem = ({ pets, onDelete }: ListItemProps) => {
 
                 <Modal transparent={true} animationType="slide" visible={confirmEdit}>
                     <View style={styles.confirmarEditar}>
+                        <View>
+                            <Image source={require('../assets/EditPet.png')} style={styles.logo} />
+                        </View>
                         <Text style={styles.TextConfirmEdit}>Deseja editar o nome do PET {pets.name}?</Text>
                         <TextInput
                             style={styles.TextEdit}
@@ -289,6 +338,8 @@ const ListItem = ({ pets, onDelete }: ListItemProps) => {
 const ListPet = () => {
     const [pets, setPets] = useState<{ id: string; name: string }[]>([]);
     const [loading, setLoading] = useState(false);
+
+    const voltar = () => { navigation.navigate('Home') };
 
     const logout = () => {
         user.setState({ token: null });
@@ -333,17 +384,31 @@ const ListPet = () => {
                     keyExtractor={(item) => item.id.toString()}
                 />
             )}
-            <TouchableOpacity style={styles.btnCadastrarPET}>
-                <Button title="Cadastrar PET" onPress={navigateToCadPets} />
+            <TouchableOpacity
+                style={[styles.buttonContainer, styles.btnList]}
+                onPress={navigateToCadPets}
+            >
+                <MaterialCommunityIcons name="badge-account-horizontal-outline" size={24} color="#fff" />
+                <Text style={[styles.buttonText, { color: '#fff' }]}>Cadastrar PET</Text>
             </TouchableOpacity>
 
-            <TouchableOpacity style={styles.logoutButton}>
-                <Button title="Deslogar" onPress={logout} />
+            <TouchableOpacity
+                style={[styles.buttonContainer, styles.btnLogout]}
+                onPress={voltar}
+            >
+                <MaterialCommunityIcons name="arrow-left" size={24} color="#fff" />
+                <Text style={[styles.buttonText, { color: '#fff' }]}>Home</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+                style={[styles.buttonContainer, styles.btnSair]}
+                onPress={logout}
+            >
+                <MaterialCommunityIcons name="logout-variant" size={24} color="#fff" />
+                <Text style={[styles.buttonText, { color: '#fff' }]}>Sair do App</Text>
             </TouchableOpacity>
         </SafeAreaView>
     );
 }
 
 export default ListPet;
-
-

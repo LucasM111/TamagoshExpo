@@ -1,15 +1,27 @@
 import axios from '../axios.configs';
 import { useState } from "react";
-import { SafeAreaView, StyleSheet, TextInput, Button, TouchableOpacity, Image, View, Alert } from "react-native";
+import { SafeAreaView, StyleSheet, TextInput, Button, TouchableOpacity, Image, View, Alert, ImageBackground, Text, ScrollView } from "react-native";
 import user from '../store/user';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 const style = StyleSheet.create({
+    backgroundImage: {
+        flex: 1,
+        resizeMode: "cover",
+        justifyContent: "center",
+    },
     container: {
         flex: 1,
-        backgroundColor: "#000",
         alignItems: 'center',
         padding: 20,
+    },
+    TextLogin: {
+        fontSize: 40,
+        color: '#fff',
+        textAlign: 'center',
+        marginBottom: 20,
+        opacity: 0.8,
     },
     textInput: {
         width: 300,
@@ -19,27 +31,52 @@ const style = StyleSheet.create({
         paddingLeft: 10,
         marginBottom: 10
     },
-    btnLogar: {
-        width: 150,
+    logo: {
+        width: 300,
+        height: 320,
+        margin: 10,
+        marginBottom: 10,
+        borderRadius: 70,
+    },
+    background: {
+        flex: 1,
+        width: '100%',
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+
+    buttonContainer: {
+        marginVertical: 10,
+        width: 200,
         height: 40,
-        backgroundColor: '#0dff00',
         borderRadius: 10,
         alignItems: 'center',
         justifyContent: 'center',
-        color: "#fff"
+        flexDirection: 'row',
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 2,
+        },
+        shadowOpacity: 0.2,
+        shadowRadius: 3.84,
+        elevation: 5,
+    },
+
+    buttonText: {
+        marginLeft: 10,
+        fontSize: 16,
+        fontWeight: 'bold',
     },
     btnCad: {
-        margin: 10,
-        width: 150,
-        height: 40,
-        backgroundColor: '#0000ff',
-        borderRadius: 10,
-        alignItems: 'center',
-        justifyContent: 'center',
+        backgroundColor: '#4CAF50', // Verde
     },
-    logo: {
-        height: 200
-    }
+    btnList: {
+        backgroundColor: '#3498db', // Azul
+    },
+    btnLogout: {
+        backgroundColor: '#e74c3c', // Vermelho
+    },
 })
 
 
@@ -77,55 +114,53 @@ const Login = ({ navigation }: any) => {
     };
 
     return (
-        <SafeAreaView style={style.container}>
-            <View>
-                <Image source={require('../assets/logo.png')} style={style.logo} />
-            </View>
-
-            <TextInput
-                placeholder="Digite seu Login"
-                style={style.textInput}
-                value={email}
-                onChangeText={Input}
-            />
-
-
-            <TextInput
-                secureTextEntry={true}
-                placeholder="Digite sua Senha"
-                style={style.textInput}
-                value={senha}
-                onChangeText={InputSenha}
-            />
-
-            <TouchableOpacity
-                style={style.btnLogar}
+        <ImageBackground source={require('../assets/TexturaPreta.jpg')} style={style.backgroundImage}>
+            <KeyboardAwareScrollView
+                contentContainerStyle={{ flex: 1 }}
+                resetScrollToCoords={{ x: 0, y: 0 }}
+                scrollEnabled={false}
             >
-                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                    <MaterialCommunityIcons name="login" size={24} color="#000" />
-                    <Button
-                        onPress={submitar}
-                        title="Logar"
-                        color="#000"
-                    />
-                </View>
-            </TouchableOpacity>
+                <ScrollView>
+                    <SafeAreaView style={style.container}>
+                        <View>
+                            <Image source={require('../assets/SejaBemVindo.gif')} style={style.logo} />
+                        </View>
+                        <Text style={style.TextLogin}>Login</Text>
+                        <TextInput
+                            placeholder="Digite seu Login"
+                            style={style.textInput}
+                            value={email}
+                            onChangeText={Input}
+                        />
 
 
-            <TouchableOpacity
-                style={style.btnCad}
-            >
-                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                    <MaterialCommunityIcons name="account-plus" size={24} color="#fff" />
-                    <Button
-                        onPress={navegar}
-                        title="Cadastrar"
-                        color="#fff"
-                    />
-                </View>
-            </TouchableOpacity>
+                        <TextInput
+                            secureTextEntry={true}
+                            placeholder="Digite sua Senha"
+                            style={style.textInput}
+                            value={senha}
+                            onChangeText={InputSenha}
+                        />
 
-        </SafeAreaView>
+                        <TouchableOpacity
+                            style={[style.buttonContainer, style.btnCad]}
+                            onPress={submitar}
+                        >
+                            <MaterialCommunityIcons name="login" size={24} color="#fff" />
+                            <Text style={[style.buttonText, { color: '#fff' }]}>Logar</Text>
+                        </TouchableOpacity>
+
+                        <TouchableOpacity
+                            style={[style.buttonContainer, style.btnList]}
+                            onPress={navegar}
+                        >
+                            <MaterialCommunityIcons name="format-list-bulleted" size={24} color="#fff" />
+                            <Text style={[style.buttonText, { color: '#fff' }]}>Cadastre-se</Text>
+                        </TouchableOpacity>
+                    </SafeAreaView>
+                </ScrollView>
+            </KeyboardAwareScrollView>
+        </ImageBackground >
     );
 }
 
