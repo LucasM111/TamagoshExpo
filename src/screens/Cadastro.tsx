@@ -1,6 +1,8 @@
 import axios from '../axios.configs';
 import React, { useCallback, useState, useEffect } from "react";
 import { SafeAreaView, TextInput, View, Image, StyleSheet, Alert, TouchableOpacity, Button } from "react-native";
+import { MaterialCommunityIcons } from '@expo/vector-icons';
+
 
 // Rota: https://tamagochiapi-clpsampedro.b4a.run
 
@@ -27,14 +29,22 @@ const style = StyleSheet.create({
         marginBottom: 10
     },
     btnCad: {
-        margin: 10,
-        width: 100,
+        width: 150,
         height: 40,
-        backgroundColor: '#b7ff00',
+        backgroundColor: '#0dff00',
         borderRadius: 10,
         alignItems: 'center',
         justifyContent: 'center',
-        color: "#fff"
+        margin: 10
+    },
+    btnCadVoltar: {
+        width: 150,
+        height: 40,
+        backgroundColor: '#ff0000',
+        borderRadius: 10,
+        alignItems: 'center',
+        justifyContent: 'center',
+        margin: 10
     }
 })
 
@@ -114,23 +124,31 @@ const Cadastro = ({ navigation }: any) => {
                 value={confirmaSenha}
                 onChangeText={InputConfirmarSenha}
             />
-
             <TouchableOpacity
                 style={style.btnCad}
             >
-                <Button
-                    onPress={submitar}
-                    title="Cadastrar"
-                />
+                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                    <MaterialCommunityIcons name="login" size={24} color="#000" />
+                    <Button
+                        onPress={submitar}
+                        title="Cadastrar"
+                        color="#000"
+                    />
+                </View>
             </TouchableOpacity>
 
-            <TouchableOpacity style={style.btnCad}>
-                <Button
-                    onPress={voltar}
-                    title="Voltar"
-                />
+            <TouchableOpacity
+                style={style.btnCadVoltar}
+            >
+                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                    <MaterialCommunityIcons name="arrow-left" size={24} color="white" />
+                    <Button
+                        onPress={voltar}
+                        title="Voltar"
+                        color="#fff"
+                    />
+                </View>
             </TouchableOpacity>
-
         </SafeAreaView>
     );
 }

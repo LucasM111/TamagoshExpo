@@ -2,6 +2,7 @@ import axios from '../axios.configs';
 import { useState } from "react";
 import { SafeAreaView, StyleSheet, TextInput, Button, TouchableOpacity, Image, View, Alert } from "react-native";
 import user from '../store/user';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 const style = StyleSheet.create({
     container: {
@@ -19,9 +20,9 @@ const style = StyleSheet.create({
         marginBottom: 10
     },
     btnLogar: {
-        width: 100,
+        width: 150,
         height: 40,
-        backgroundColor: '#b7ff00',
+        backgroundColor: '#0dff00',
         borderRadius: 10,
         alignItems: 'center',
         justifyContent: 'center',
@@ -29,13 +30,12 @@ const style = StyleSheet.create({
     },
     btnCad: {
         margin: 10,
-        width: 100,
+        width: 150,
         height: 40,
-        backgroundColor: '#b7ff00',
+        backgroundColor: '#0000ff',
         borderRadius: 10,
         alignItems: 'center',
         justifyContent: 'center',
-        color: "#fff"
     },
     logo: {
         height: 200
@@ -101,20 +101,28 @@ const Login = ({ navigation }: any) => {
             <TouchableOpacity
                 style={style.btnLogar}
             >
-                <Button
-                    onPress={submitar}
-                    title="Logar"
-                />
+                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                    <MaterialCommunityIcons name="login" size={24} color="#000" />
+                    <Button
+                        onPress={submitar}
+                        title="Logar"
+                        color="#000"
+                    />
+                </View>
             </TouchableOpacity>
 
 
             <TouchableOpacity
                 style={style.btnCad}
             >
-                <Button
-                    onPress={navegar}
-                    title="Cadastrar"
-                />
+                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                    <MaterialCommunityIcons name="account-plus" size={24} color="#fff" />
+                    <Button
+                        onPress={navegar}
+                        title="Cadastrar"
+                        color="#fff"
+                    />
+                </View>
             </TouchableOpacity>
 
         </SafeAreaView>

@@ -1,5 +1,6 @@
 import React from "react";
 import { SafeAreaView, Text, View, Image, StyleSheet, TouchableOpacity, Button } from "react-native";
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 const style = StyleSheet.create({
     container: {
@@ -14,14 +15,34 @@ const style = StyleSheet.create({
     },
     btnCad: {
         margin: 10,
-        width: 150,
+        width: 200,
         height: 40,
         backgroundColor: '#b7ff00',
         borderRadius: 10,
         alignItems: 'center',
         justifyContent: 'center',
         color: "#fff"
-    }
+    },
+    btnList: {
+        margin: 10,
+        width: 200,
+        height: 40,
+        backgroundColor: '#b7ff00',
+        borderRadius: 10,
+        alignItems: 'center',
+        justifyContent: 'center',
+        color: "#fff"
+    },
+    btnLogout: {
+        margin: 10,
+        width: 200,
+        height: 40,
+        backgroundColor: '#b7ff00',
+        borderRadius: 10,
+        alignItems: 'center',
+        justifyContent: 'center',
+        color: "#fff"
+    },
 })
 
 const Home = ({ navigation }: any) => {
@@ -38,11 +59,17 @@ const Home = ({ navigation }: any) => {
 
             </View>
 
-            <TouchableOpacity style={style.btnCad}>
-                <Button
-                    onPress={cadPet}
-                    title="Cadastrar Pets"
-                />
+            <TouchableOpacity
+                style={style.btnCad}
+            >
+                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                    <MaterialCommunityIcons name="account-plus" size={24} color="white" />
+                    <Button
+                        onPress={cadPet}
+                        title="Cadastrar Pets"
+                        color="#fff"
+                    />
+                </View>
             </TouchableOpacity>
 
             <TouchableOpacity style={style.btnCad}>
