@@ -19,12 +19,12 @@ function App(): JSX.Element {
 
     <NavigationContainer >
       <Stack.Navigator>
-        <Stack.Screen name='Login' component={Login} />
-        <Stack.Screen name='Home' component={Home} />
-        <Stack.Screen name='Cadastro' component={Cadastro} />
-        <Stack.Screen name='CadPets' component={CadPets} />
-        <Stack.Screen name='ListPet' component={ListPet} />
-        <Stack.Screen name='DetalhesPet' component={DetalhesPet} />
+        <Stack.Screen name='Login' component={Login} options={{ headerShown: false }} />
+        <Stack.Screen name='Home' component={Home} options={{ headerShown: false }} />
+        <Stack.Screen name='Cadastro' component={Cadastro} options={{ headerShown: false }} />
+        <Stack.Screen name='CadPets' component={CadPets} options={{ headerShown: false }} />
+        <Stack.Screen name='ListPet' component={ListPet} options={{ headerShown: false }} />
+        <Stack.Screen name='DetalhesPet' component={DetalhesPet} options={{ headerShown: false }} />
 
       </Stack.Navigator>
     </NavigationContainer>
