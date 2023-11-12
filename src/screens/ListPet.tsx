@@ -4,6 +4,15 @@ import axios from '../axios.configs';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import user from "../store/user";
+import imagem1 from '../assets/1.png';
+import imagem2 from '../assets/2.png';
+import imagem3 from '../assets/3.png';
+import imagem4 from '../assets/4.png';
+import imagem5 from '../assets/5.png';
+import imagem6 from '../assets/6.png';
+import imagem7 from '../assets/7.png';
+import imagem8 from '../assets/8.png';
+import imagem9 from '../assets/9.png';
 
 
 
@@ -59,7 +68,7 @@ const styles = StyleSheet.create({
         left: 0,
         right: 0,
         bottom: 0,
-        backgroundColor: 'rgba(255, 255, 255, 0.9)',
+        backgroundColor: 'rgba(0, 0, 0, 0.9)',
         alignItems: 'center',
         justifyContent: 'center',
     },
@@ -83,7 +92,7 @@ const styles = StyleSheet.create({
         marginBottom: 10
     },
     TextConfirmDelete: {
-        color: 'black',
+        color: '#fff',
         fontSize: 18,
         marginBottom: 20,
     },
@@ -148,16 +157,35 @@ type ListItemProps = {
     pets: {
         id: string;
         name: string;
+
     };
     onDelete: (id: string) => void;
 }
 
+const SorteiaNumero = () => {
+    return Math.floor(Math.random() * 9) + 1;
+};
 
 const ListItem = ({ pets, onDelete }: ListItemProps) => {
     const navigation = useNavigation();
     const [Confirmarcao, setConfirmarcao] = useState(false);
     const [confirmEdit, setConfirmEdit] = useState(false);
     const [newName, setNewName] = useState(pets.name);
+
+    const PegaImagem = SorteiaNumero();
+    const imagens = {
+        1: imagem1,
+        2: imagem2,
+        3: imagem3,
+        4: imagem4,
+        5: imagem5,
+        6: imagem6,
+        7: imagem7,
+        8: imagem8,
+        9: imagem9,
+    };
+
+    const imagem = imagens[PegaImagem];
 
     const Exclusao = async (id: string) => {
         setConfirmarcao(true);
@@ -189,7 +217,7 @@ const ListItem = ({ pets, onDelete }: ListItemProps) => {
     };
 
     const handleCardClick = () => {
-        navigation.navigate('DetalhesPet', { id: pets.id, name: pets.name });
+        navigation.navigate('DetalhesPet', { id: pets.id, name: pets.name, imagem: imagem });
     };
 
     return (
@@ -198,7 +226,7 @@ const ListItem = ({ pets, onDelete }: ListItemProps) => {
                 <View>
                     <Text style={styles.Text}>ID: {pets.id}</Text>
                     <Text style={styles.TextDetalhes}>Nome: {pets.name}</Text>
-                    <Image source={require('../assets/ChibiKurama.png')} style={styles.imagem} />
+                    <Image source={imagem} style={styles.imagem} />
                 </View>
                 <TouchableOpacity onPress={handleEdit} style={styles.IconeEditar}>
                     <MaterialCommunityIcons name="pencil" size={30} color="white" />
@@ -209,7 +237,7 @@ const ListItem = ({ pets, onDelete }: ListItemProps) => {
 
                 <Modal transparent={true} animationType="slide" visible={Confirmarcao}>
                     <View style={styles.confirmarDelete}>
-                        <Text style={styles.TextConfirmDelete}>Tem certeza que quer deletar o PET {pets.name}?</Text>
+                        <Text style={styles.TextConfirmDelete}>Deletar o pet {pets.name}?</Text>
                         <View style={styles.ContainerButton}>
                             <TouchableOpacity
                                 style={[styles.btnCad, styles.Confirmar]}

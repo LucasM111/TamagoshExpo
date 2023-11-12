@@ -80,9 +80,12 @@ const getPetDetails = async (id) => {
 
 
 const DetalhesPet = ({ route }: any) => {
-    const { id, name } = route.params;
+    const { id, imagem } = route.params;
     const [petDetails, setPetDetails] = useState(null);
     const [jogoAberto, setJogoAberto] = useState(false);
+
+
+
     const handleGameEnd = () => {
         setJogoAberto(false);
         brincarComPet();
@@ -195,7 +198,7 @@ const DetalhesPet = ({ route }: any) => {
                         <Text style={styles.petDetails}>ID: {petDetails.id}</Text>
                         <Text style={styles.petDetailsNome}>{petDetails.name}</Text>
                         <Text style={styles.petDetailsNivel}>Level: {Math.round(petDetails.restLevel)}</Text>
-                        <Image source={require('../assets/ChibiKurama.png')} style={styles.image} />
+                        <Image source={imagem} style={styles.image} />
                         <Text style={styles.petDetailsStats}>Vida: {Math.round(petDetails.life)}</Text>
                         <Text style={styles.petDetailsStats}>Diversão: {Math.round(petDetails.funLevel)}</Text>
                         <Text style={styles.petDetailsStats}>Fome: {Math.round(petDetails.foodLevel)}</Text>
