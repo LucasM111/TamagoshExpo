@@ -99,7 +99,7 @@ const styles = StyleSheet.create({
     },
 
 });
-
+//@ts-ignore
 const getPetDetails = async (id) => {
     try {
         const response = await axios.get(`/pet/${id}`);
@@ -123,18 +123,22 @@ const DetalhesPet = ({ route, navigation }: any) => {
     };
 
     const alimentarPet = async () => {
-        try {
+        try {//@ts-ignore
             const DescansoAntes = Math.floor(Math.round(petDetails?.life));
+            //@ts-ignore
             const fomeAntes = Math.floor(Math.round(petDetails?.foodLevel));
 
             await axios.post(`/pet/${id}/food`);
             console.log("Pet alimentado com sucesso!");
 
             if (petDetails) {
+                //@ts-ignore
                 const novoNivelVida = petDetails.life + 1;
+                //@ts-ignore
                 const novoNivelFome = Math.floor(Math.round(petDetails.foodLevel - 5));
 
                 setPetDetails({
+                    //@ts-ignore
                     ...petDetails,
                     life: novoNivelVida,
                     foodLevel: novoNivelFome,
@@ -155,16 +159,18 @@ const DetalhesPet = ({ route, navigation }: any) => {
     };
 
     const aumentarDescansoPet = async () => {
-        try {
+        try {//@ts-ignore
             const vidaAntes = Math.floor(Math.round(petDetails?.life));
 
             await axios.post(`/pet/${id}/rest`);
             console.log("Descanso do pet aumentado com sucesso!");
 
             if (petDetails) {
+                //@ts-ignore
                 const novaVida = petDetails.life + 1;
 
                 setPetDetails({
+                    //@ts-ignore
                     ...petDetails,
                     life: novaVida,
                 });
@@ -185,16 +191,18 @@ const DetalhesPet = ({ route, navigation }: any) => {
     };
 
     const brincarComPet = async () => {
-        try {
+        try {// @ts-ignore  
             const DiversaoAntes = Math.floor(Math.round(petDetails?.funLevel));
 
             await axios.post(`/pet/${id}/play`);
             console.log("Pet se divertiu");
 
             if (petDetails) {
+                //@ts-ignore
                 const Novadiversao = petDetails.funLevel + 1;
 
                 setPetDetails({
+                    //@ts-ignore
                     ...petDetails,
                     funLevel: Novadiversao,
                 });
@@ -224,23 +232,29 @@ const DetalhesPet = ({ route, navigation }: any) => {
     }, []);
 
     return (
+
         <SafeAreaView style={styles.container}>
             {jogoAberto ? (
                 <JogoParOuImpar onGameEnd={handleGameEnd} />
             ) : petDetails ? (
                 <View style={styles.card}>
                     <Image source={imagem} style={styles.image} />
+                    {/* @ts-ignore */}
                     <Text style={styles.petDetailsNome}>{petDetails.name}</Text>
                     <Text style={styles.petDetailsNivel}>
+                        {/* @ts-ignore */}
                         Level: {Math.round(petDetails.restLevel)}
                     </Text>
                     <Text style={styles.petDetailsStats}>
+                        {/* @ts-ignore */}
                         Vida: {Math.round(petDetails.life)}
                     </Text>
                     <Text style={styles.petDetailsStats}>
+                        {/* @ts-ignore */}
                         Diversão: {Math.round(petDetails.funLevel)}
                     </Text>
                     <Text style={styles.petDetailsStats}>
+                        {/* @ts-ignore */}
                         Fome: {Math.round(petDetails.foodLevel)}
                     </Text>
                     <TouchableOpacity

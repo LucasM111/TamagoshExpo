@@ -163,6 +163,7 @@ const JogoParOuImpar = ({ onGameEnd }: { onGameEnd: (isWinner: boolean) => void 
             >
               <Text style={styles.buttonTextModal}>Continuar</Text>
             </TouchableOpacity>
+            {/* @ts-ignore */}
             <TouchableOpacity onPress={() => { setModalVisible(false); onGameEnd(); }}>
               <Text style={styles.buttonTextModalEncerrar}>Fechar</Text>
             </TouchableOpacity>

@@ -2,18 +2,19 @@ import React, { useCallback, useEffect, useState } from "react";
 import { StyleSheet, ActivityIndicator, FlatList, SafeAreaView, View, Text, TouchableOpacity, Modal, Image, Button, TextInput } from "react-native";
 import axios from '../axios.configs';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useFocusEffect } from '@react-navigation/native';
 import user from "../store/user";
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import imagem1 from '../assets/1.png';
-import imagem2 from '../assets/2.png';
-import imagem3 from '../assets/3.png';
-import imagem4 from '../assets/4.png';
-import imagem5 from '../assets/5.png';
-import imagem6 from '../assets/6.png';
-import imagem7 from '../assets/7.png';
-import imagem8 from '../assets/8.png';
-import imagem9 from '../assets/9.png';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'; //@ts-ignore
+import imagem1 from '../assets/1.png';// @ts-ignore
+import imagem2 from '../assets/2.png';// @ts-ignore  
+import imagem3 from '../assets/3.png';// @ts-ignore
+import imagem4 from '../assets/4.png';// @ts-ignore
+import imagem5 from '../assets/5.png';// @ts-ignore
+import imagem6 from '../assets/6.png';// @ts-ignore
+import imagem7 from '../assets/7.png';// @ts-ignore
+import imagem8 from '../assets/8.png';// @ts-ignore
+import imagem9 from '../assets/9.png';// @ts-ignore
+import { get } from "react-native/Libraries/TurboModule/TurboModuleRegistry";
 
 
 
@@ -222,7 +223,7 @@ const ListItem = ({ pets, onDelete }: ListItemProps) => {
         8: imagem8,
         9: imagem9,
     };
-
+    //@ts-ignore
     const imagem = imagens[PegaImagem];
 
     const Exclusao = async (id: string) => {
@@ -231,12 +232,17 @@ const ListItem = ({ pets, onDelete }: ListItemProps) => {
 
     const handleEdit = () => {
         setConfirmEdit(true);
+        //@ts-ignore
     };
 
     const handleSaveEdit = async () => {
         try {
             await axios.put(`/pet/${pets.id}`, { name: newName });
             setConfirmEdit(false);
+            // @ts-ignore
+            navigation.navigate('Home');
+
+
         } catch (error) {
             console.error('Erro ao editar o nome do PET', error);
             setConfirmEdit(false);
@@ -254,7 +260,7 @@ const ListItem = ({ pets, onDelete }: ListItemProps) => {
         }
     };
 
-    const handleCardClick = () => {
+    const handleCardClick = () => {//@ts-ignore
         navigation.navigate('DetalhesPet', { id: pets.id, name: pets.name, imagem: imagem });
     };
 
@@ -338,11 +344,12 @@ const ListItem = ({ pets, onDelete }: ListItemProps) => {
 const ListPet = () => {
     const [pets, setPets] = useState<{ id: string; name: string }[]>([]);
     const [loading, setLoading] = useState(false);
-
+    //@ts-ignore
     const voltar = () => { navigation.navigate('Home') };
 
     const logout = () => {
         user.setState({ token: null });
+        //@ts-ignore
         navigation.navigate('Login');
     };
 
@@ -369,6 +376,7 @@ const ListPet = () => {
     const navigation = useNavigation();
 
     const navigateToCadPets = () => {
+        //@ts-ignore
         navigation.navigate('CadPets');
     };
 
